@@ -10,7 +10,7 @@ only been tested on Debian and Subgraph OS.
 It does depend on a Linux kernel with NAT + redirect capabilities and iptable
 rules to redirect outgoing traffic to Metaproxy.
 
-Metaproxy is inspired by the (redsocks)[http://darkk.net.ru/redsocks/] project 
+Metaproxy is inspired by the [redsocks](http://darkk.net.ru/redsocks/) project 
 (and has similar functions at this stage).
 
 ## Use cases
@@ -48,7 +48,8 @@ $ iptables -t nat -N METAPROXY
 # iptables -t nat -A METAPROXY -d 172.16.0.0/12 -j RETURN
  
 # iptables -t nat -A METAPROXY -d 192.168.0.0/16 -j RETURN                                                                                                                                   
-# iptables -t nat -A METAPROXY -d 224.0.0.0/4 -j RETURN                                                                                                                                      
+# iptables -t nat -A METAPROXY -d 224.0.0.0/4 -j RETURN
+
 # iptables -t nat -A METAPROXY -d 240.0.0.0/4 -j RETURN   
 ```
 
