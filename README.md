@@ -45,7 +45,7 @@ To run Metaproxy, some iptables rules must first be created.
 $ iptables -t nat -N METAPROXY
 ```
 
-2. Create rules to skip processing of destination of reserved local networks
+2. Create rules to skip processing of destination of reserved IPv4 networks
 
 ```
 # iptables -t nat -A METAPROXY -d 0.0.0.0/8 -j RETURN 
