@@ -22,6 +22,17 @@ that are not destined for the Tor network. This is known as Tor enforcement.
 But generally, Metaproxy can be used to redirect specific connections through a
 SOCKS or HTTP proxy (such as privoxy or polipo).
 
+### wget
+
+wget is a command-line application that does not support SOCKS proxying (without
+special build options). For this reason, it is an ideal candidate for use
+with Subgraph Metaproxy. 
+
+Metaproxy can help an application like wget make connections over Tor. When
+Metaproxy is configured to redirect ports 80/443, it will redirect wget to
+connect to Tor via its own SOCKS client. This is transparent to wget, who
+is only aware that it is connecting to the website that has been requested.
+
 ## Usage
 
 ### Running Subgraph Metaproxy
