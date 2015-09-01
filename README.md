@@ -93,6 +93,5 @@ listening port.
 2. By itself, Metaproxy will not block DNS leaks. A Tor enforcement policy
 at the netfilter/iptables level is better suited to addressing this issue.
 
-3. Metaproxy is not going to work very well with IPv6. Tor currently doesn't 
-support it either.
+3. Metaproxy is not going to work very well with IPv6. 
 
