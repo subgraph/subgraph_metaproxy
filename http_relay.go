@@ -10,9 +10,8 @@ import (
 )
 
 
-func relayHttp(clientConn net.Conn, client *Client, relayPort string) (error) {
-        // TODO: Proxy IP Should not be hard-coded, needs to come from config
-        proxyAddr := net.JoinHostPort("127.0.0.1", relayPort)
+func relayHttp(clientConn net.Conn, client *Client, relay Relay) (error) {
+        proxyAddr := net.JoinHostPort(relay.RelayIP, relay.RelayPort)
         destAddr := net.JoinHostPort(client.destAddr.String(),
                 strconv.Itoa(int(client.destPort)))
         destUrl, err := url.Parse(destAddr)

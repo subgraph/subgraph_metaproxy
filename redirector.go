@@ -57,7 +57,8 @@ func (r *RelayType) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("relaytype should be a string, got %s", data)
 	}
 	relayTypes := map[string]RelayType{
-		"SOCKS5": SOCKS5, "HTTP_CONNECT": HTTP_CONNECT}
+		"SOCKS5": SOCKS5, 
+		"HTTP_CONNECT": HTTP_CONNECT}
 	rt, ok := relayTypes[s]
 	if !ok {
 		return fmt.Errorf("invalid RelayType %q", s)
@@ -225,13 +226,13 @@ func handleProxyConnection(conn net.Conn, client *Client, relays map[string]Rela
 	switch relay.RelayType {
 	case HTTP_CONNECT:
 		LogWriter.Info("Opening HTTP/S CONNECT relay.")
-		err := relayHttp(conn, client, relay.RelayPort)
+		err := relayHttp(conn, client, relay)
 		if err != nil {
 			LogWriter.Err(err.Error())
 		}
 	case SOCKS5:
 		LogWriter.Info("Opening SOCKS5 relay.")
-		err := relaySocks5(conn, client, relay.RelayPort)
+		err := relaySocks5(conn, client, relay)
 		if err != nil {
 			LogWriter.Err(err.Error())
 		}

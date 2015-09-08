@@ -7,7 +7,7 @@ or HTTP).
 Metaproxy should run on a variety of Linux-based operating systems but it has
 only been tested on Debian and Subgraph OS. 
 
-It does depend on a Linux kernel with NAT + redirect capabilities and iptable
+It does depend on a Linux kernel with NAT + redirect capabilities and iptables
 rules to redirect outgoing traffic to Metaproxy.
 
 Metaproxy is inspired by the [redsocks](http://darkk.net.ru/redsocks/) project 
@@ -86,6 +86,41 @@ if you have made changes.
 
 ```
 $ subgraph_metaproxy -c subgraph_metaproxy.conf -t
+```
+
+### Redirecting to TCP to a Unix domain socket SOCKS proxy
+
+Metaproxy supports relaying TCP connections to a SOCKS proxy listening on a
+Unix domain socket. An example where this may be useful is when Tor is 
+configured to provide a SOCKS proxy over Unix domain sockets instead of a TCP
+port. In this scenario, an application be can denied general outgoing network
+access over TCP but still make outgoing connections via the Tor network as 
+Metaproxy will relay the connections through the configured Tor Unix domain
+socket.
+
+To enable this feature, the `relayip` field of relay configuration must
+specify a path to a Unix domain socket on the host. For example, to set a
+wildcard Unix domain socket relay, the following configuration can be used:
+
+```
+{
+        "Relays":[
+                        {
+                                "destinationport": "*",
+                                "relaytype": "SOCKS5",
+                                "relayip": "unix:/var/lib/tor/socket"
+                        }
+        ]
+}
+
+```
+
+**NOTE:** This also requires that the upstream `golang.org/x/net/proxy` library
+is patched to support SOCKS5 Unix domain proxy connections. A patched version 
+can be installed by running the following commands:
+```
+$ cd $GOPATH/src/golang.org/x # Make this directory if it does not already exist
+$ git clone https://github.com/mckinney-subgraph/net.git
 ```
 
 ## Caveats
