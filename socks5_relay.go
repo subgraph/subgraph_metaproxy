@@ -1,23 +1,28 @@
 package main
 
 import (
-	"net"
-	"strconv"
+	"crypto/rand"
 	"encoding/base32"
 	"fmt"
+	"net"
+	"strconv"
 	"strings"
 
 	"golang.org/x/net/proxy"
 )
 
-func relaySocks5(clientConn net.Conn, client *Client, relay Relay) (error) {
-	var userBytes [8]byte
+func relaySocks5(clientConn net.Conn, client *Client, relay Relay) error {
+	userBytes := make([]byte, 8)
 	var proxyAddr string
 	var proxyType string
+	_, err := rand.Read(userBytes)
 
+	if err != nil {
+		return err
+	}
 	auth := proxy.Auth{
 		User:     base32.StdEncoding.EncodeToString(userBytes[:]),
-		Password: "",
+		Password: "password",
 	}
 	if strings.HasPrefix(relay.RelayIP, "unix:") {
 		proxyAddr = strings.Split(relay.RelayIP, ":")[1]
