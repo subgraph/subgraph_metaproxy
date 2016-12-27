@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"net"
-	"os"
+	"fmt"
 	"io"
 	"log"
-	"fmt"
+	"net"
+	"os"
 	"reflect"
 	"strconv"
 	"syscall"
@@ -15,10 +15,10 @@ import (
 const SO_ORIGINAL_DST = 80
 
 type Relay struct {
-	DestinationPort string `json:"destinationport"`
+	DestinationPort string    `json:"destinationport"`
 	RelayType       RelayType `json:"relaytype"`
-	RelayIP         string `json:"relayip"`
-	RelayPort       string `json:"relayport"`
+	RelayIP         string    `json:"relayip"`
+	RelayPort       string    `json:"relayport"`
 }
 
 type RelayConfig struct {
@@ -40,7 +40,7 @@ const (
 	HTTP_CONNECT
 )
 
-func (r RelayType) String() (string) {
+func (r RelayType) String() string {
 	switch r {
 	case SOCKS5:
 		return "SOCKS5"
@@ -57,7 +57,7 @@ func (r *RelayType) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("relaytype should be a string, got %s", data)
 	}
 	relayTypes := map[string]RelayType{
-		"SOCKS5": SOCKS5, 
+		"SOCKS5":       SOCKS5,
 		"HTTP_CONNECT": HTTP_CONNECT}
 	rt, ok := relayTypes[s]
 	if !ok {
@@ -138,7 +138,9 @@ func acceptClient(conn *net.TCPConn, relays map[string]Relay) {
 	Debugf("Client clientAddr: %s\n", client.clientAddr)
 	Debugf("Client destAddr: %s\n", client.destAddr)
 	Debugf("Client destPort: %d\n", client.destPort)
-	handleProxyConnection(newConn, &client, relays)
+	if handleProxyConnection(newConn, &client, relays) != nil {
+		conn.Close()
+	}
 }
 
 func getDestAddr(clientConn *net.TCPConn) (net.IP, uint16, *net.TCPConn, error) {
@@ -167,7 +169,7 @@ func getDestAddr(clientConn *net.TCPConn) (net.IP, uint16, *net.TCPConn, error) 
 	return destAddr, destPort, newTCPConn, nil
 }
 
-func ProxyRelay(port string, relays map[string]Relay) (error) {
+func ProxyRelay(port string, relays map[string]Relay) error {
 	tcpAddr := net.TCPAddr{}
 	tcpAddr.IP = net.ParseIP("127.0.0.1")
 	tcpAddr.Port, _ = strconv.Atoi(port)
@@ -201,7 +203,7 @@ func ProxyRelay(port string, relays map[string]Relay) (error) {
 	return nil
 }
 
-func handleProxyConnection(conn net.Conn, client *Client, relays map[string]Relay) (error) {
+func handleProxyConnection(conn net.Conn, client *Client, relays map[string]Relay) error {
 	dpString := strconv.Itoa(int(client.destPort))
 	var relay Relay
 	// Look for relay configuration for destination port
@@ -235,6 +237,8 @@ func handleProxyConnection(conn net.Conn, client *Client, relays map[string]Rela
 		err := relaySocks5(conn, client, relay)
 		if err != nil {
 			LogWriter.Err(err.Error())
+			return fmt.Errorf(err.Error())
+
 		}
 	default:
 		return fmt.Errorf("Relay type not found: %s\n", relay.RelayType)
