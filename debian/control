@@ -1,0 +1,15 @@
+Source: subgraph-metaproxy
+Section: net 
+Priority: optional
+Maintainer: David McKinney <mckinney@subgraph.com>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.8
+Homepage: https://subgraph.com
+#Vcs-Git: git://git.debian.org/collab-maint/subgraph-metaproxy.git
+
+Package: subgraph-metaproxy
+Architecture: amd64
+Depends: ${misc:Depends}, ${shlibs:Depends}, golang, adduser
+Description: Transparent proxy relay for HTTP and SOCKS.
+ Transparent proxy relay for HTTP and SOCKS. Meant for transparently relaying
+ connections through without specific application-level proxy settings.

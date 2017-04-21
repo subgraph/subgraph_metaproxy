@@ -1,0 +1,20 @@
+subgraph-metaproxy (0.5) unstable; urgency=medium
+
+  * Updates from upstream 
+
+ -- David McKinney <mckinney@subgraph.com>  Tue, 27 Dec 2016 12:51:47 -0500
+
+subgraph-metaproxy (0.4) unstable; urgency=medium
+
+  * Updated control file 
+  * Shortened description in systemd unit file. 
+  * New build from upstream, adds randomization of username for SOCKS relay
+    auth 
+
+ -- David McKinney <mckinney@subgraph.com>  Thu, 21 Apr 2016 19:20:54 +0000
+
+subgraph-metaproxy (0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David McKinney <mckinney@subgraph.com>  Tue, 10 Jun 2014 14:17:06 +0000
