@@ -1,0 +1,13 @@
+[Unit]
+Description=Subgraph Metaproxy - transparent proxy relay.
+After=network.target
+
+[Service]
+Type=simple
+User=subgraph-metaproxy
+ExecStart=/sbin/subgraph_metaproxy -c /etc/subgraph_metaproxy/subgraph_metaproxy.conf
+
+[Install]
+WantedBy=multi-user.target
+
+
