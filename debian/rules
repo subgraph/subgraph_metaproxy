@@ -1,8 +1,19 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+export DH_GOPKG := github.com/subgraph/subgraph_metaproxy
+export DESTDIR := $(CURDIR)/debian/subgraph_metaproxy
 
 %:
-	dh $@ 
+	dh $@ --buildsystem=golang --with=golang --with=systemd
+
+override_dh_auto_install:
+	dh_auto_install
+	mkdir -p $(CURDIR)/debian/subgraph-metaproxy/sbin
+	mv $(CURDIR)/debian/subgraph-metaproxy/usr/bin/subgraph_metaproxy $(CURDIR)/debian/subgraph-metaproxy/sbin
+	rm -rf $(CURDIR)/debian/subgraph-metaproxy/usr/share/gocode
+	find $(CURDIR)/debian/subgraph-metaproxy/ -type d -empty -delete
+
+override_dh_auto_test:
+	@echo skipped auto test

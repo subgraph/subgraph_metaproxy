@@ -1,3 +1,2 @@
-subgraph_metaproxy sbin/
 subgraph_metaproxy.conf etc/subgraph_metaproxy/
 subgraph_metaproxy.service lib/systemd/system/

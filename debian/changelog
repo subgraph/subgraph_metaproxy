@@ -1,3 +1,16 @@
+subgraph-metaproxy (0.5.1-1.1) unstable; urgency=medium
+
+  * NMU
+  * git-buildpackage ready
+
+ -- Alexsandr Kibal <ak@subgraph.com>  Sun, 23 Apr 2017 14:27:13 +0000
+
+subgraph-metaproxy (0.5) unstable; urgency=medium
+
+  * Updates from upstream 
+
+ -- David McKinney <mckinney@subgraph.com>  Tue, 27 Dec 2016 12:51:47 -0500
+
 subgraph-metaproxy (0.5) unstable; urgency=medium
 
   * Updates from upstream 
