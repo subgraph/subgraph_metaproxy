@@ -5,6 +5,10 @@
 export DH_GOPKG := github.com/subgraph/subgraph_metaproxy
 export DESTDIR := $(CURDIR)/debian/subgraph_metaproxy
 
+export DH_GOPKG := github.com/subgraph/subgraph_metaproxy
+export DESTDIR := $(CURDIR)/debian/subgraph_metaproxy
+
+
 %:
 	dh $@ --buildsystem=golang --with=golang --with=systemd
 
