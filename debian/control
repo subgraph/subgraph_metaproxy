@@ -2,7 +2,7 @@ Source: subgraph-metaproxy
 Section: net 
 Priority: optional
 Maintainer: David McKinney <mckinney@subgraph.com>
-Build-Depends: debhelper (>= 9.0.0), dh-systemd, dh-golang, golang-golang-x-net-dev, lintian
+Build-Depends: debhelper (>= 9.0.0), dh-systemd, dh-golang, golang-go, golang-golang-x-net-dev, lintian
 Standards-Version: 3.9.8
 Homepage: https://www.github.com/subgraph/subgraph_metaproxy/
 Vcs-Git: https://github.com/subgraph/subgraph_metaproxy.git
